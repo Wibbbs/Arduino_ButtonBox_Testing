@@ -65,14 +65,14 @@ void updateEncoder(){
   {
     encoderValue ++;
     Joystick.pressButton(2);
-    delay(25);
+    delay(50);
     Joystick.releaseButton(2);
   }
   if(sum == 0b1110 || sum == 0b0111 || sum == 0b0001 || sum == 0b1000) 
   {
     encoderValue --;
     Joystick.pressButton(3);
-    delay(25);
+    delay(50);
     Joystick.releaseButton(3);
   }
 

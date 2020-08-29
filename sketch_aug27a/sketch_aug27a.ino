@@ -9,8 +9,10 @@ int encoderButtonPin = 16;
 int pushButtonState = 0;
 int encoderButtonState = 0;
 int ledState = 0;
+char buf [64];
 
-Encoder myEnc(2, 3);
+Encoder enc1(0, 1);
+Encoder enc2(2, 3);
 
 void setup()
 {
@@ -21,7 +23,8 @@ void setup()
     Joystick.begin();
 }
 
-long oldPosition = -999;
+long oldPosition1 = -999;
+long oldPosition2 = -999;
 int lastButtonState10 = 0;
 int lastButtonState16 = 16;
 
@@ -49,24 +52,45 @@ void loop() // The loop function runs again and again
     //     delay(300);
     // }
 
-    long newPosition = myEnc.read() / 4;
-    if (newPosition != oldPosition)
+    long newPosition1 = enc1.read() / 4;
+    if (newPosition1 != oldPosition1)
     {
-        if (newPosition > oldPosition)
+        if (newPosition1 > oldPosition1)
         {
             Joystick.pressButton(2);
-            delay(25);
+            delay(50);
             Joystick.releaseButton(2);
         }
-        else if (newPosition < oldPosition)
+        else if (newPosition1 < oldPosition1)
         {
             Joystick.pressButton(3);
-            delay(25);
+            delay(50);
             Joystick.releaseButton(3);
         }
         
-        oldPosition = newPosition;
-        Serial.println(newPosition);
+        oldPosition1 = newPosition1;
+        Serial.println("Encoder1: " + newPosition1);
+    }
+
+    long newPosition2 = enc2.read() / 4;
+    if (newPosition2 != oldPosition2)
+    {
+        if (newPosition2 > oldPosition2)
+        {
+            Joystick.pressButton(4);
+            delay(50);
+            Joystick.releaseButton(4);
+        }
+        else if (newPosition2 < oldPosition2)
+        {
+            Joystick.pressButton(5);
+            delay(50);
+            Joystick.releaseButton(5);
+        }
+        
+        oldPosition2 = newPosition2;
+        sprintf (buf, "Encoder 2:", newPosition2);
+        Serial.println(buf);
     }
 
 
