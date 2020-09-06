@@ -1,5 +1,5 @@
 {
     "board": "arduino:avr:leonardo",
-    "port": "COM6",
-    "sketch": "amstudios_code\\amstudios_code.ino"
+    "port": "COM7",
+    "sketch": "tryTogglePulse\\trytTogglePulse.ino"
 }

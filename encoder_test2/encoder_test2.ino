@@ -3,8 +3,8 @@
 
 Joystick_ Joystick;
 //these pins can not be changed 2/3 are special pins
-int encoderPin1 = 2;
-int encoderPin2 = 3;
+int encoderPin1 = 0;
+int encoderPin2 = 1;
 int encoderSwitchPin = 16; //push button switch
 
 volatile int lastEncoded = 0;
