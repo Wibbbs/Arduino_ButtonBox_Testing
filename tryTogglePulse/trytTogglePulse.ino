@@ -101,6 +101,8 @@ void setup()
 {
   Joystick.begin();
   rotary_init();
+  Serial.begin(9600);
+  // buttbx.setHoldTime(100);
 }
 
 void loop()
@@ -115,44 +117,51 @@ void CheckAllButtons(void)
 {
   if (buttbx.getKeys())
   {
-    if (buttbx.key[0].stateChanged && buttbx.key[0].kstate == PRESSED || buttbx.key[0].kstate == RELEASED)
+    for (int i = 0; i < LIST_MAX; i++)
     {
-      Joystick.pressButton(0);
-      delay(50);
-      Joystick.releaseButton(0);
+      if (buttbx.key[i].stateChanged)
+      {
+        Serial.println(buttbx.key[i].kcode);
+        switch (buttbx.key[i].kstate)
+        {
+        case PRESSED:
+        case HOLD:
+          switch (buttbx.key[i].kcode)
+          {
+          case 0:
+          {
+            Joystick.setButton(buttbx.key[i].kchar, 1);
+            delay(100);
+            Joystick.setButton(buttbx.key[i].kchar, 0);
+            break;
+          }
+          default:
+          {
+            Joystick.setButton(buttbx.key[i].kchar, 1);
+            break;
+          }
+          }
+        case RELEASED:
+        case IDLE:
+          switch (buttbx.key[i].kcode)
+          {
+          case 0:
+          {
+            Joystick.setButton(buttbx.key[i].kchar, 1);
+            delay(100);
+            Joystick.setButton(buttbx.key[i].kchar, 0);
+            break;
+          }
+          default:
+          {
+            Joystick.setButton(buttbx.key[i].kchar, 0);
+            break;
+          }
+          }
+        }
+      }
     }
   }
-
-  // if (buttbx.getKeys())
-  // {
-  //   for (int i = 0; i < LIST_MAX; i++)
-  //   {
-  // if (buttbx.key[i].stateChanged)
-  // {
-  //   if (i = 0 && buttbx.key[i].kstate == PRESSED )
-  //   {
-  //     Joystick.pressButton(i);
-  //     delay(50);
-  //     Joystick.releaseButton(i);
-  //     break;
-  //   }
-  //   // else
-  // {
-  //   switch (buttbx.key[i].kstate)
-  //   {
-  //   case PRESSED:
-  //   case HOLD:
-  //     Joystick.setButton(buttbx.key[i].kchar, 1);
-  //     break;
-  //   case RELEASED:
-  //   case IDLE:
-  //     Joystick.setButton(buttbx.key[i].kchar, 0);
-  //     break;
-  //   }
-  // }
-  //     }
-  //   }
-  // }
 }
 
 void rotary_init()
